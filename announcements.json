@@ -1,0 +1,76 @@
+{
+    "announcements":
+    [
+        {
+            "text": "4_ABC123",
+            "date_start":"2012-04-23T18:25:43.511Z",
+            "date_end":"2012-04-23T18:25:43.511Z",
+            "time_start":900, 
+            "time_end":1200,
+            "days-of-week": [
+                {"sunday": true},
+                {"monday": true},
+                {"tuesday": true},
+                {"wednesday": true},
+                {"thursday": true},
+                {"friday": true},
+                {"saturday": true}
+            ],
+            "weather":"any"
+        },
+        
+        {
+            "text": "3_ABC123",
+            "date_start":"2012-04-23T18:25:43.511Z",
+            "date_end":"2020-04-23T18:25:43.511Z",
+            "time_start":900, 
+            "time_end":1200,
+            "days-of-week": [
+                {"sunday": true},
+                {"monday": true},
+                {"tuesday": true},
+                {"wednesday": true},
+                {"thursday": true},
+                {"friday": true},
+                {"saturday": true}
+            ],
+            "weather":"any"
+        },
+        
+        {
+            "text": "2_ABC123",
+            "date_start":"2012-04-23T18:25:43.511Z",
+            "date_end":"2012-04-23T18:25:43.511Z",
+            "time_start":900, 
+            "time_end":1200,
+            "days-of-week": [
+                {"sunday": true},
+                {"monday": true},
+                {"tuesday": true},
+                {"wednesday": true},
+                {"thursday": true},
+                {"friday": true},
+                {"saturday": true}
+            ],
+            "weather":"any"
+        },
+        
+        {
+            "text": "1_ABC123",
+            "date_start":"2012-04-23T18:25:43.511Z",
+            "date_end":"2012-04-23T18:25:43.511Z",
+            "time_start":900, 
+            "time_end":1200,
+            "days-of-week": [
+                {"sunday": true},
+                {"monday": true},
+                {"tuesday": true},
+                {"wednesday": true},
+                {"thursday": true},
+                {"friday": true},
+                {"saturday": true}
+            ],
+            "weather":"any"
+        }
+    ]
+}
