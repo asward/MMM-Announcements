@@ -17,24 +17,25 @@ Module.register("MMM-Announcements",{
         //RETURN ONLY THE TEXT
         // var aarray = self.announcements['announcements'] ;
 
-        if(Array.isArray(self.announcements)){
-            var fa = self.announcements.slice();
-            //DATE
-            fa = fa.map(x=>moment().range(new Date(x.date_start),new Date(date_end)).contains(moment()) ) ;
-            //DOW
-            fa = fa.map(x=>x ) ;
-            //TIME
-            fa = fa.map(x=>x ) ;
-            //WEATHER
-            fa = fa.map(x=>x ) ;
+        // if(Array.isArray(self.announcements)){
+        //     var fa = self.announcements.slice();
+        //     //DATE
+        //     fa = fa.map(x=>moment().range(new Date(x.date_start),new Date(date_end)).contains(moment()) ) ;
+        //     //DOW
+        //     fa = fa.map(x=>x ) ;
+        //     //TIME
+        //     fa = fa.map(x=>x ) ;
+        //     //WEATHER
+        //     fa = fa.map(x=>x ) ;
 
-            if (fa === undefined || fa.length == 0) {
-                return  self.defaults.announcements;
-            } 
-            return fa.map(x=>x['text']) ; //TODO
-        }
+        //     if (fa === undefined || fa.length == 0) {
+        //         return  self.defaults.announcements;
+        //     } 
+        //     return fa.map(x=>x['text']) ; //TODO
+        // }
 
-        return self.defaults.announcements ;
+        // return self.defaults.announcements ;
+        return self.announcements ;
     },
 
     getAnnouncement: function(){
@@ -45,7 +46,7 @@ Module.register("MMM-Announcements",{
         if(++self.index > maxIndex){
             self.index = 0 ;
         }
-        return filteredAnnouncements[self.index] ;
+        return filteredAnnouncements[self.index].text ;
 
     },
 
