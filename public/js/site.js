@@ -90,7 +90,7 @@ var doc_ready = function () {
     //GET LIST OF ALL ANNOUCNEMENTS
 
     function reqListener() {
-        // console.log(this.responseText);
+        console.log(this.responseText);
         var resJSON = JSON.parse(this.responseText) ;
         console.log (resJSON.announcements) ;
         resJSON.announcements.forEach((e,i,a)=>{
@@ -100,7 +100,7 @@ var doc_ready = function () {
 
     var oReq = new XMLHttpRequest();
     oReq.addEventListener("load", reqListener);
-    oReq.open("GET", "/announcements/api/get_announcements");
+    oReq.open("GET", "/announcements/api/html");
     oReq.send();
 
     

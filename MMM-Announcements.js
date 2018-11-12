@@ -6,39 +6,33 @@ Module.register("MMM-Announcements",{
     index: 0,
 	// Default module config.
 	defaults: {
-        announcements: [" ˁ˚ᴥ˚ˀ ","?"],
-        cycletime: 20000,
-        fadetime: 4000
+        announcements: [{"text":" ˁ˚ᴥ˚ˀ ","duration":20}],
 	},
 
     getFilteredAnnouncements: function(){
         //FILTER ANNOUNCEMENTS TO THOSE APPLICABLE TO CURRENT STATE
         var self = this ;
-        //RETURN ONLY THE TEXT
-        // var aarray = self.announcements['announcements'] ;
+        var fa ;
+        if(Array.isArray(self.announcements.announcements)){
+            fa = self.announcements.announcements.slice();
+            // //DATE
+            // fa = fa.map(x=>moment().range(new Date(x.date_start),new Date(date_end)).contains(moment()) ) ;
+            // //DOW
+            // fa = fa.map(x=>x ) ;
+            // //TIME
+            // fa = fa.map(x=>x ) ;
+            // //WEATHER
+            // fa = fa.map(x=>x ) ;
 
-        // if(Array.isArray(self.announcements)){
-        //     var fa = self.announcements.slice();
-        //     //DATE
-        //     fa = fa.map(x=>moment().range(new Date(x.date_start),new Date(date_end)).contains(moment()) ) ;
-        //     //DOW
-        //     fa = fa.map(x=>x ) ;
-        //     //TIME
-        //     fa = fa.map(x=>x ) ;
-        //     //WEATHER
-        //     fa = fa.map(x=>x ) ;
-
-        //     if (fa === undefined || fa.length == 0) {
-        //         return  self.defaults.announcements;
-        //     } 
-        //     return fa.map(x=>x['text']) ; //TODO
-        // }
-
-        // return self.defaults.announcements ;
-        return self.announcements ;
+            
+        }
+        if (fa === undefined || fa.length == 0) {
+            fa = self.defaults.announcements;
+        } 
+        return fa ;
     },
 
-    getAnnouncement: function(){
+    updateAnnouncement: function(){
         var self = this ;
         var filteredAnnouncements = self.getFilteredAnnouncements() ;
         var maxIndex = filteredAnnouncements.length-1 ;
@@ -46,29 +40,36 @@ Module.register("MMM-Announcements",{
         if(++self.index > maxIndex){
             self.index = 0 ;
         }
-        return filteredAnnouncements[self.index].text ;
-
+        self.current_announcement = filteredAnnouncements[self.index] ;
     },
-
 
 	// Override dom generator.
 	getDom: function() {
         var self = this ;
-        var announcementText = self.getAnnouncement() ;
-		var wrapper = document.createElement("div");
-		wrapper.innerHTML = announcementText;
-		return wrapper;
+
+        if(null==self.timeout){
+            self.updateAnnouncement() ;
+
+            self.timeout = setTimeout(()=>{
+                self.timeout=null ;
+                self.updateDom(parseInt(self.current_announcement.duration*.05, 10));
+            },self.current_announcement.duration*1000) ;
+        }
+
+        var wrapper = document.createElement("div");
+        wrapper.innerHTML = self.current_announcement.text; 
+        
+
+        return wrapper;
     },
 
     start: function() {
         var self = this ;
         this.config.initialized = false ;
         this.sendSocketNotification('GET_ANNOUNCEMENTS', "");
-        Log.log(this.name + ' is started!');
+        Log.log(this.name + ' is started!');        
 
-        self.interval = setInterval(function(){
-            self.updateDom(self.defaults.fadetime);
-        },self.defaults.cycletime)  
+        self.updateDom(0);
     },
 
     socketNotificationReceived:function(notification, payload) {
@@ -76,7 +77,8 @@ Module.register("MMM-Announcements",{
         if (notification == "UPDATE_ANNOUNCEMENTS") {
             
             Log.log(this.name + " received a module notification: " + notification);
-            self.announcements = JSON.parse(payload)["announcements"] 
+            self.announcements = payload;
+            self.updateDom(0);
         } 
     },
 
