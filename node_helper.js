@@ -52,7 +52,7 @@ module.exports = NodeHelper.create({
         self.sendSocketNotification('UPDATE_ANNOUNCEMENTS', self.announcements);
     },
     updateFile: function(){
-        fs.writeFile(path.resolve(this.path + "/announcements.json"), JSON.stringify(this.announcements));
+        fs.writeFileSync(path.resolve(this.path + "/announcements.json"), JSON.stringify(this.announcements));
     },
     createRoutes: function(){
         var self = this ;

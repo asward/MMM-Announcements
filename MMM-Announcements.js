@@ -4,7 +4,7 @@ Module.register("MMM-Announcements",{
     announcements: {},
     interval: {} ,
     index: 0,
-	// Default module config.
+    // Default module config.
 	defaults: {
         announcements: [{"text":" ˁ˚ᴥ˚ˀ ","duration":20}],
 	},
