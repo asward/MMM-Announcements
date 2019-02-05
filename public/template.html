@@ -1,15 +1,22 @@
-    <html>
+    
+<!doctype html>
+<html lang="en">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <head>  
         <link rel="stylesheet" type="text/css" href="/announcements/public/css/site.css">    
-        <!-- <script src="/announcements/public/js/site.js" type="text/javascript">
-        </script>    -->
-            
+        <link rel="stylesheet" type="text/css" href="/announcements/public/css/bootstrap.min.css">
+    
     </head>
+    
+
     <body>
-        <div class='nav'>
-            <h1 class='nav-item' href='/announcements' >Announcements</h1>
-        </div>
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="/announcements">Announcements</a>
+         <form class="form-inline" action="/announcements/create" method="get">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Create New</button>
+        </form>
+    </nav>
         {{content}}
     </body>
 </html>
