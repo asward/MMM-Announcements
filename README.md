@@ -1,12 +1,10 @@
 # MMM-Announcements
-This is an extension for the [MagicMirror](https://github.com/MichMich/MagicMirror). It allows remote editing of a rotating list of announcements to display on the Mirror. You do not need to restart the Mirror Server or the display to received the updated list. Each time can have a specific display duration (in seconds).
+This is an extension for the [MagicMirror](https://github.com/MichMich/MagicMirror). It allows remote editing, through a web browser, of a rotating list of announcements. No need to restart the Mirror server or the clients to receive the updated list. Each item can have an individually defined display duration.
 ## Installation
 1. Navigate into your MagicMirror's `modules` folder and execute `git clone https://github.com/asward/MMM-Announcements.git`. A new folder will appear navigate into it.
 2. Execute `npm install` to install the node dependencies.
 
 ## Using the module
-First of all connect a button to your Raspberry PI: [How to connect a button.](http://razzpisampler.oreilly.com/ch07.html)
-
 To use this module, add it to the modules array in the `config/config.js` file:
 ````javascript
 modules: [
@@ -16,7 +14,7 @@ modules: [
     }
 ]
 ````
-You can create, delete or edit announcements using a modern web browser and visiting http://(your-mirror-host)/announcements. 
+You can create, delete or edit announcements using a modern web browser and visiting http://your-mirror-host/announcements. 
 
 
 The MIT License (MIT)
