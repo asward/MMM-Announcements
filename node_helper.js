@@ -56,101 +56,8 @@ module.exports = NodeHelper.create({
     },
     createRoutes: function(){
         var self = this ;
-        // ////// API //////
-        // self.expressApp.post('/announcements/api/create_json', self.textParser, function (req, res) {
-        //     //POST JSON OF ALL ANNOUNCEMENTS
-        //     if (!req.body){
-        //         return res.sendStatus(400)
-        //     } 
-        //     console.log("POST_ANNOUCNEMENTS") ;
-        //     console.log(req.body) ;
-        //     var new_announcements = JSON.parse(req.body) ;
-        //     self.announcements = new_announcements ;
-        //     //Write to file then update the front end
-        //     self.updateFile() ;
-        //     self.updateAnnouncements() ;
 
-        //     res.writeHead(200);
-        //     res.end(req.body) ;
-        // });
-
-        
-
-
-
-        
-        // self.expressApp.put('/announcements/api/update/:id', self.textParser, function (req, res) {
-        //     //PUT (UPDATE) ANNOUNCEMENT
-        //     if (!req.body){
-        //         return res.sendStatus(400)
-        //     } 
-        //     var updated_announcement = JSON.parse(req.body) ;
-
-        //     const index = self.announcements.announcements.map(e => e.id).indexOf(req.params.id);
-        //     existing_data.announcements.splice(index,1,updated_announcement) ;
-                
-        //     //Write to file then update the front end
-        //     self.updateFile() ;
-        //     self.updateAnnouncements() ;
-
-        //     res.writeHead(200);
-        //     res.end(req.body) ;
-        // });
-
-        
-        // self.expressApp.get('/announcements/api/update/:id', self.textParser, function (req, res) {
-        //     //GET ANNOUNCEMENT UPDATE FORM
-        //     res.setHeader("Content-Type",'text/html'); //Solution!
-        //     res.writeHead(200);
-            
-        //     fs.readFile(path.resolve(self.path + "/public/update.html"), "utf8", function(err, html) {
-        //         html.replace('{{}}',);
-        //         res.end(html) ;
-        //     });
-        // });
-
-        
-        
-        // self.expressApp.get('/announcements/api/announcement/:id', self.textParser, function (req, res) {
-        //     //GET SINGLE ANNOUNCEMENT (JSON)
-            
-        //     //DELETE
-        //     const index = self.announcements.announcements.map(e => e.id).indexOf(req.params.id);
-        //     self.announcements.announcements[index] ;
-            
-        //     //Write to file then update the front end
-        //     self.updateFile() ;
-        //     self.updateAnnouncements() ;
-
-        //     res.writeHead(200);
-        //     res.setHeader("Content-Type",'application/json'); //Solution!
-        //     res.end(JSON.stringify(self.announcements.announcements[index])) ;
-        // });
-
-
-
-        // //DELETE
-        // self.expressApp.delete('/announcements/api/delete/:id', self.textParser, function (req, res) {
-        //     //DELETE ANNOUNCEMENT
-
-        //     //POST JSON OF ALL ANNOUNCEMENTS
-        //     if (!req.body){
-        //         return res.sendStatus(400)
-        //     } 
-        //     var updated_announcement = JSON.parse(req.body) ;
-
-        //     //DELETE
-        //     const index = self.announcements.announcements.map(e => e.id).indexOf(req.params.id);
-        //     self.announcements.announcements.splice(index,1) ;
-            
-        //     //Write to file then update the front end
-        //     self.updateFile() ;
-        //     self.updateAnnouncements() ;
-        //     res.end(req.body) ;
-        // });
-
-
-        ///EDIT
+        ///EDIT - GET
         self.expressApp.get('/announcements/edit/:id', self.textParser, function (req, res) {
             //EDIT SINGLE ANNOUNCEMENT
 
@@ -172,6 +79,7 @@ module.exports = NodeHelper.create({
             }
         });
         
+        ///EDIT - POST
         self.expressApp.post('/announcements/edit/:id', bodyParser.urlencoded({
             extended: false
         }), function (req, res) {
@@ -203,7 +111,7 @@ module.exports = NodeHelper.create({
             res.redirect('/announcements');
         });
 
-        //CREATE
+        //CREATE - POST
         self.expressApp.post('/announcements/create', bodyParser.urlencoded({
             extended: false
         }), function (req, res) {
@@ -232,58 +140,43 @@ module.exports = NodeHelper.create({
                 new_announcement.id = max_id+1;
                 new_announcement.text = req.body.text ;
                 new_announcement.duration = parseInt(req.body.duration) ;
-
+                console.log(new_announcement.id);
+                console.log(new_announcement.text);
+                console.log(new_announcement.duration);
                 //PUSH ITEM TO EXISTING ARRAY
                 self.announcements.announcements.push(new_announcement) ;
 
                 //Write to file then update the front end
                 self.updateFile() ;
                 self.updateAnnouncements() ;
+                
                 res.redirect('/announcements');
             //ELSE
                 //RETURN FORM WITH DATA AND ERRORS
             
         });
-                
+
+        ///CREATE - GET        
         self.expressApp.get('/announcements/create', self.textParser, function (req, res) {
             //GET CREATE ANNOUNCEMENT FORM
-            var template = self.renderTemplate('/public/create.html') ;
-            res.send(template) ;
+            var template =  self.renderTemplate('/public/template.html',
+                {content:self.renderTemplate('/public/create.html')}
+                ) ;    
+                res.send(template) ;
         });
 
-
-        // self.expressApp.get('/announcements/api/json', self.textParser, function (req, res) {
-        //     //GET ALL ANNOUNCEMENT (JSON)
-        //     res.setHeader("Content-Type",'application/json'); //Solution!
-        //     res.writeHead(200);
-        //     res.end(JSON.stringify(self.announcements)) ;
-        // });
-
-        // self.expressApp.get('/announcements/api/html', self.textParser, function (req, res) {
-        //     //GET  ANNOUNCEMENTS (HTML)
-            
-        //     res.setHeader("Content-Type",'text/html'); //Solution!
-        //     res.writeHead(200);
-            
-        //     res.end(self.announcementHTML()) ;
-        // });
-
-        ////// STATIC //////
+        ///MAIN
         this.expressApp.route('/announcements')
         .get(function (req, res) {
             var template =  self.renderTemplate('/public/template.html',{content:self.announcementHTML()}) ;
             res.send(template); 
         });
 
+        ////// STATIC //////
         this.expressApp.use('/announcements/public', express.static(path.join(self.path + '/public/')))
 
     },
     
-    // renderTemplate: function({content= ''}){
-    //     var template =  fs.readFileSync(path.resolve(this.path + "/public/template.html")).toString() ;
-    //     template = template.replace('{{content}}',content) ;
-    // },
-
     renderTemplate: function(template_path, data = {}){
         var template =  fs.readFileSync(path.resolve(this.path + template_path)).toString() ;
 
@@ -318,4 +211,9 @@ module.exports = NodeHelper.create({
         html = this.renderTemplate('/public/announcement_list.html',{list: html}) ;
         return html ;
     },
+    createHTML: function(){
+        var html = this.renderListTemplate('/public/announcement_list_item.html',this.announcements.announcements) ;
+        html = this.renderTemplate('/public/create.html',{list: html}) ;
+        return html ;
+    }
 });
